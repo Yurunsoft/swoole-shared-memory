@@ -1,0 +1,14 @@
+{
+    "name": "swoole-shared-memory",
+    "require": {
+
+    },
+    "require-dev": {
+        "eaglewu/swoole-ide-helper": "dev-master"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Yurun\\Swoole\\SharedMemory\\" : "src/"
+        }
+    }
+}
