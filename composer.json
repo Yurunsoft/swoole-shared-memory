@@ -1,5 +1,5 @@
 {
-    "name": "swoole-shared-memory",
+    "name": "yurunsoft/swoole-shared-memory",
     "require": {
 
     },
