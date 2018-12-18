@@ -1,0 +1,35 @@
+<?php
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+use Yurun\Swoole\SharedMemory\Server;
+use Yurun\Swoole\SharedMemory\Client\Client;
+use Yurun\Swoole\SharedMemory\Client\Store\Stack;
+
+$options = [
+    // 这个文件必须，而且不能是samba共享文件
+    'socketFile'    =>  '/swoole-shared-memory.sock',
+];
+
+
+$client = new Client($options);
+var_dump($client->connect());
+
+$stack = new Stack($client);
+
+$stack->push('a', microtime(true));
+$stack->push('a', microtime(true));
+$stack->push('a', microtime(true));
+$stack->push('a', 1,2,3);
+
+var_dump($stack->size('a'));
+
+var_dump('top: ', $stack->top('a'));
+
+echo 'pop:', PHP_EOL;
+
+for($i = 0; $i < 6 + 1; ++$i)
+{
+    var_dump($stack->pop('a'));
+}
+
+var_dump('top: ', $stack->top('a'));
