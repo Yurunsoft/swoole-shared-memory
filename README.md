@@ -15,6 +15,20 @@
 
 你只需要在 `Swoole` 自定义进程中启动 `SSM` 服务来监听 `Unix Socket`，或者也可以启动一个独立的 `SSM` 服务。
 
+## Composer
+
+本项目可以使用composer安装，遵循psr-4自动加载规则，在你的 `composer.json` 中加入下面的内容:
+
+```json
+{
+    "require": {
+        "yurunsoft/swoole-shared-memory": "~1.0"
+    }
+}
+```
+
+然后执行 `composer update` 安装。
+
 ## 文档
 
 [API 文档](https://apidoc.gitee.com/yurunsoft/swoole-shared-memory) (感谢码云提供服务)
