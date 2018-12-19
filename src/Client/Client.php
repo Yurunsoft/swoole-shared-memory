@@ -37,6 +37,13 @@ class Client
     private $socket;
 
     /**
+     * 是否已连接
+     *
+     * @var boolean
+     */
+    private $connected;
+
+    /**
      * 构造方法
      *
      * @param array $options
@@ -60,12 +67,37 @@ class Client
      */
     public function connect(): bool
     {
+        if($this->connected)
+        {
+            return true;
+        }
         $this->socket = stream_socket_client('unix://' . $this->socketFile, $errno, $errstr);
         if(false === $this->socket)
         {
+            $this->connected = false;
             return false;
         }
+        $this->connected = true;
         return true;
+    }
+
+    public function close()
+    {
+        if($this->connected)
+        {
+            fclose($this->socket);
+            $this->socket = null;
+        }
+    }
+
+    /**
+     * 是否已连接
+     *
+     * @return boolean
+     */
+    public function isConnected(): bool
+    {
+        return $this->connected;
     }
 
     /**
@@ -76,11 +108,20 @@ class Client
      */
     public function send(Operation $operation): bool
     {
+        if(!$this->connected || !$this->connect())
+        {
+            return false;
+        }
         $data = ($this->serialize)($operation);
         $length = strlen($data);
         $data = pack('N', $length) . $data;
         $length += 4;
-        return $length === fwrite($this->socket, $data, $length);
+        $result = fwrite($this->socket, $data, $length);
+        if(false === $result)
+        {
+            $this->close();
+        }
+        return $length === $result;
     }
 
     /**
@@ -90,15 +131,21 @@ class Client
      */
     public function recv()
     {
+        if(!$this->connected || !$this->connect())
+        {
+            return false;
+        }
         $meta = fread($this->socket, 4);
         if('' === $meta || false === $meta)
         {
+            $this->close();
             return false;
         }
         $length = unpack('N', $meta)[1];
         $data = fread($this->socket, $length);
         if(false === $data || !isset($data[$length - 1]))
         {
+            $this->close();
             return false;
         }
         $result = ($this->unserialize)($data);
