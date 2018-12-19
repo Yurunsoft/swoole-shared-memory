@@ -13,21 +13,6 @@ class Stack implements IStack
     private $data = [];
 
     /**
-     * 获取栈对象
-     *
-     * @param string $name
-     * @return \SplStack
-     */
-    private function getStack($name)
-    {
-        if(!isset($this->data[$name]))
-        {
-            $this->data[$name] = new \SplStack;
-        }
-        return $this->data[$name];
-    }
-
-    /**
      * 栈是否为空
      *
      * @param string $name
@@ -35,7 +20,7 @@ class Stack implements IStack
      */
     public function empty($name)
     {
-        return $this->getStack($name)->isEmpty();
+        return $this->getInstance($name)->isEmpty();
     }
 
     /**
@@ -46,7 +31,7 @@ class Stack implements IStack
      */
     public function pop($name)
     {
-        $stack = $this->getStack($name);
+        $stack = $this->getInstance($name);
         return $stack->isEmpty() ? false : $stack->pop();
     }
 
@@ -62,7 +47,7 @@ class Stack implements IStack
         $result = true;
         foreach($element as $e)
         {
-            $result &= $this->getStack($name)->push($e);
+            $result &= $this->getInstance($name)->push($e);
         }
         return $result;
     }
@@ -75,7 +60,7 @@ class Stack implements IStack
      */
     public function size($name)
     {
-        return $this->getStack($name)->count();
+        return $this->getInstance($name)->count();
     }
 
     /**
@@ -86,7 +71,7 @@ class Stack implements IStack
      */
     public function top($name)
     {
-        $stack = $this->getStack($name);
+        $stack = $this->getInstance($name);
         return $stack->isEmpty() ? false : $stack->top();
     }
 
@@ -99,6 +84,33 @@ class Stack implements IStack
     public function clear($name)
     {
         $this->data[$name] = new \SplStack;
+    }
+
+    /**
+     * 获取数组
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getArray($name)
+    {
+        $stack = clone $this->getInstance($name);
+        return iterator_to_array($stack);
+    }
+
+    /**
+     * 获取实例对象
+     *
+     * @param string $name
+     * @return \SplQueue
+     */
+    public function getInstance($name)
+    {
+        if(!isset($this->data[$name]))
+        {
+            $this->data[$name] = new \SplQueue;
+        }
+        return $this->data[$name];
     }
 
 }

@@ -84,4 +84,26 @@ class Queue extends Base implements IQueue
         return $this->doCall(new Operation('Queue', 'clear', [$name]));
     }
 
+    /**
+     * 获取数组
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getArray($name)
+    {
+        return $this->doCall(new Operation('Queue', 'getArray', [$name]));
+    }
+
+    /**
+     * 获取实例对象
+     *
+     * @param string $name
+     * @return \Yurun\Swoole\SharedMemory\Struct\PriorityQueue
+     */
+    public function getInstance($name)
+    {
+        return $this->doCall(new Operation('Queue', 'getInstance', [$name]));
+    }
+
 }

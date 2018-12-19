@@ -25,6 +25,8 @@ var_dump($stack->size('a'));
 
 var_dump('top: ', $stack->top('a'));
 
+var_dump('array:', $stack->getArray('a'));
+
 echo 'pop:', PHP_EOL;
 
 for($i = 0; $i < 6 + 1; ++$i)

@@ -13,21 +13,6 @@ class Queue implements IQueue
     private $data = [];
 
     /**
-     * 获取队列对象
-     *
-     * @param string $name
-     * @return \SplQueue
-     */
-    private function getQueue($name)
-    {
-        if(!isset($this->data[$name]))
-        {
-            $this->data[$name] = new \SplQueue;
-        }
-        return $this->data[$name];
-    }
-
-    /**
      * 队列是否为空
      *
      * @param string $name
@@ -35,7 +20,7 @@ class Queue implements IQueue
      */
     public function empty($name)
     {
-        return $this->getQueue($name)->isEmpty();
+        return $this->getInstance($name)->isEmpty();
     }
 
     /**
@@ -46,7 +31,7 @@ class Queue implements IQueue
      */
     public function pop($name)
     {
-        $queue = $this->getQueue($name);
+        $queue = $this->getInstance($name);
         return $queue->isEmpty() ? false : $queue->dequeue();
     }
 
@@ -62,7 +47,7 @@ class Queue implements IQueue
         $result = true;
         foreach($element as $e)
         {
-            $result &= $this->getQueue($name)->enqueue($e);
+            $result &= $this->getInstance($name)->enqueue($e);
         }
         return $result;
     }
@@ -75,7 +60,7 @@ class Queue implements IQueue
      */
     public function size($name)
     {
-        return $this->getQueue($name)->count();
+        return $this->getInstance($name)->count();
     }
 
     /**
@@ -86,7 +71,7 @@ class Queue implements IQueue
      */
     public function front($name)
     {
-        $queue = $this->getQueue($name);
+        $queue = $this->getInstance($name);
         return $queue->isEmpty() ? false : $queue->top();
     }
 
@@ -98,7 +83,7 @@ class Queue implements IQueue
      */
     public function back($name)
     {
-        $queue = $this->getQueue($name);
+        $queue = $this->getInstance($name);
         return $queue->isEmpty() ? false : $queue->bottom();
     }
 
@@ -111,6 +96,33 @@ class Queue implements IQueue
     public function clear($name)
     {
         $this->data[$name] = new \SplQueue;
+    }
+
+    /**
+     * 获取数组
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getArray($name)
+    {
+        $queue = clone $this->getInstance($name);
+        return iterator_to_array($queue);
+    }
+
+    /**
+     * 获取实例对象
+     *
+     * @param string $name
+     * @return \SplQueue
+     */
+    public function getInstance($name)
+    {
+        if(!isset($this->data[$name]))
+        {
+            $this->data[$name] = new \SplQueue;
+        }
+        return $this->data[$name];
     }
 
 }

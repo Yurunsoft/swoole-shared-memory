@@ -25,6 +25,8 @@ var_dump($queue->size('a'));
 var_dump('front: ', $queue->front('a'));
 var_dump('back: ', $queue->back('a'));
 
+var_dump('array:', $queue->getArray('a'));
+
 echo 'pop:', PHP_EOL;
 
 for($i = 0; $i < 6 + 1; ++$i)

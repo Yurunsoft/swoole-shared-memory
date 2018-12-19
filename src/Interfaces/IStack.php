@@ -52,4 +52,19 @@ interface IStack
      */
     public function clear($name);
 
+    /**
+     * 获取数组
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getArray($name);
+
+    /**
+     * 获取实例对象
+     *
+     * @param string $name
+     * @return \SplStack
+     */
+    public function getInstance($name);
 }

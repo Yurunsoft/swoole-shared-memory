@@ -72,4 +72,27 @@ class Stack extends Base implements IStack
     {
         return $this->doCall(new Operation('Stack', 'clear', [$name]));
     }
+
+    /**
+     * 获取数组
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getArray($name)
+    {
+        return $this->doCall(new Operation('Stack', 'getArray', [$name]));
+    }
+
+    /**
+     * 获取实例对象
+     *
+     * @param string $name
+     * @return \Yurun\Swoole\SharedMemory\Struct\PriorityQueue
+     */
+    public function getInstance($name)
+    {
+        return $this->doCall(new Operation('Stack', 'getInstance', [$name]));
+    }
+
 }
