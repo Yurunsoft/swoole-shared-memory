@@ -27,11 +27,15 @@ var_dump('back: ', $queue->back('a'));
 
 var_dump('array:', $queue->getArray('a'));
 
+$instance = $queue->getInstance('a');
+
+var_dump($instance->count());
+
 echo 'pop:', PHP_EOL;
 
-for($i = 0; $i < 6 + 1; ++$i)
+while($element = $queue->pop('a'))
 {
-    var_dump($queue->pop('a'));
+    var_dump($element);
 }
 
 var_dump('front: ', $queue->front('a'));

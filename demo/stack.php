@@ -27,11 +27,15 @@ var_dump('top: ', $stack->top('a'));
 
 var_dump('array:', $stack->getArray('a'));
 
+$instance = $stack->getInstance('a');
+
+var_dump($instance->count());
+
 echo 'pop:', PHP_EOL;
 
-for($i = 0; $i < 6 + 1; ++$i)
+while($element = $stack->pop('a'))
 {
-    var_dump($stack->pop('a'));
+    var_dump($element);
 }
 
 var_dump('top: ', $stack->top('a'));
