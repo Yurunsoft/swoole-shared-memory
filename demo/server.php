@@ -9,6 +9,7 @@ $options = [
     'storeTypes'    =>  [
         \Yurun\Swoole\SharedMemory\Store\KV::class,
         \Yurun\Swoole\SharedMemory\Store\Stack::class,
+        \Yurun\Swoole\SharedMemory\Store\Queue::class,
     ],
 ];
 $server = new Server($options);
