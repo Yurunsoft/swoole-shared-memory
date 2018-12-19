@@ -1,39 +1,38 @@
 # swoole-shared-memory
 
-#### 项目介绍
-{**以下是码云平台说明，您可以替换为您的项目简介**
-码云是开源中国推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+[![Latest Version](https://img.shields.io/packagist/v/yurunsoft/swoole-shared-memory.svg)](https://packagist.org/packages/yurunsoft/swoole-shared-memory)
+[![Php Version](https://img.shields.io/badge/php-%3E=7.1-brightgreen.svg)](https://secure.php.net/)
+[![Swoole Version](https://img.shields.io/badge/swoole-%3E=4.1.0-brightgreen.svg)](https://github.com/swoole/swoole-src)
+[![IMI License](https://img.shields.io/github/license/Yurunsoft/swoole-shared-memory.svg)](https://github.com/Yurunsoft/swoole-shared-memory/blob/master/LICENSE)
 
-#### 软件架构
-软件架构说明
+## 介绍
 
+`Swoole Shared Memory` ( 以下简称 `SSM` ) 是为了解决 `Swoole` 常驻内存场景，多进程变量共享问题而开发的组件。
 
-#### 安装教程
+`SSM` 直接支持任意变量的跨进程共享，它是通过序列化和反序列化实现的。不仅支持常用的 `KV` 操作，还支持`Stack`、`Queue` 和 `PriorityQueue`数据结构操作。
 
-1. xxxx
-2. xxxx
-3. xxxx
+`SSM` 通过 `Unix Socket` 内核通信，不走网卡，效率极高。无需预先定义空间大小、字段等，甚至可以与 `fpm` 项目进行变量共享 ( `fpm` 项目仅可作为客户端 )。
 
-#### 使用说明
+你只需要在 `Swoole` 自定义进程中启动 `SSM` 服务来监听 `Unix Socket`，或者也可以启动一个独立的 `SSM` 服务。
 
-1. xxxx
-2. xxxx
-3. xxxx
+## 文档
 
-#### 参与贡献
+[API 文档](https://apidoc.gitee.com/yurunsoft/swoole-shared-memory) (感谢码云提供服务)
 
-1. Fork 本项目
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+QQ群：17916227 [![点击加群](https://pub.idqqimg.com/wpa/images/group.png "点击加群")](https://jq.qq.com/?_wv=1027&k=5wXf4Zq)，如有问题会有人解答和修复。
 
+## 运行环境
 
-#### 码云特技
+- [PHP](https://php.net/) >= 7.1
+- [Composer](https://getcomposer.org/)
+- [Swoole](https://www.swoole.com/) >= 4.1.0
 
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+## 版权信息
+
+Swoole Shared Memory 遵循 MIT 开源协议发布，并提供免费使用。
+
+## 捐赠
+
+<img src="https://raw.githubusercontent.com/Yurunsoft/swoole-shared-memory/dev/res/pay.png"/>
+
+开源不求盈利，多少都是心意，生活不易，随缘随缘……
