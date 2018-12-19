@@ -11,7 +11,7 @@ class Operation
     public $object;
 
     /**
-     * 操作命
+     * 操作名
      *
      * @var string
      */
