@@ -1,5 +1,5 @@
 <?php
-require dirname(__DIR__) . '/vendor/autoload.php';
+require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 use Yurun\Swoole\SharedMemory\Server;
 use Yurun\Swoole\SharedMemory\Client\Client;
