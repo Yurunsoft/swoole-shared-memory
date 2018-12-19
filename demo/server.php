@@ -10,6 +10,7 @@ $options = [
         \Yurun\Swoole\SharedMemory\Store\KV::class,
         \Yurun\Swoole\SharedMemory\Store\Stack::class,
         \Yurun\Swoole\SharedMemory\Store\Queue::class,
+        \Yurun\Swoole\SharedMemory\Store\PriorityQueue::class,
     ],
 ];
 $server = new Server($options);
