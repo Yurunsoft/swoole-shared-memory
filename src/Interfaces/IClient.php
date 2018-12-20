@@ -22,6 +22,20 @@ interface IClient
     public function connect(): bool;
 
     /**
+     * 关闭连接
+     *
+     * @return void
+     */
+    public function close();
+
+    /**
+     * 是否已连接
+     *
+     * @return boolean
+     */
+    public function isConnected(): bool;
+
+    /**
      * 发送操作
      *
      * @param \Yurun\Swoole\SharedMemory\Message\Operation $operation
@@ -35,4 +49,5 @@ interface IClient
      * @return \Yurun\Swoole\SharedMemory\Message\Result|boolean
      */
     public function recv();
+
 }

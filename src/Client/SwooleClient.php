@@ -5,7 +5,7 @@ use Yurun\Swoole\SharedMemory\Message\Result;
 use Yurun\Swoole\SharedMemory\Message\Operation;
 use Yurun\Swoole\SharedMemory\Interfaces\IClient;
 
-class Client implements IClient
+class SwooleClient implements IClient
 {
     /**
      * socket 文件路径
@@ -31,9 +31,9 @@ class Client implements IClient
     private $unserialize;
 
     /**
-     * socket 资源
+     * Swoole 协程客户端
      *
-     * @var resource
+     * @var \Swoole\Coroutine\Client
      */
     private $socket;
 
@@ -72,8 +72,16 @@ class Client implements IClient
         {
             return true;
         }
-        $this->socket = stream_socket_client('unix://' . $this->socketFile, $errno, $errstr);
-        if(false === $this->socket)
+        $this->socket = new \Swoole\Coroutine\Client(SWOOLE_SOCK_UNIX_STREAM);
+        $this->socket->set([
+            'open_tcp_nodelay'      =>  false,
+            'open_length_check'     => 1,
+            'package_length_type'   => 'N',
+            'package_length_offset' => 0,       //第N个字节是包长度的值
+            'package_body_offset'   => 4,       //第几个字节开始计算长度
+            'package_max_length'    => 2 * 1024 * 1024,  //协议最大长度，默认2M
+        ]);
+        if(false === $this->socket->connect($this->socketFile, 0))
         {
             $this->connected = false;
             return false;
@@ -91,7 +99,7 @@ class Client implements IClient
     {
         if($this->connected)
         {
-            fclose($this->socket);
+            $this->socket->close();
             $this->socket = null;
         }
     }
@@ -122,7 +130,7 @@ class Client implements IClient
         $length = strlen($data);
         $data = pack('N', $length) . $data;
         $length += 4;
-        $result = fwrite($this->socket, $data, $length);
+        $result = $this->socket->send($data);
         if(false === $result)
         {
             $this->close();
@@ -141,20 +149,13 @@ class Client implements IClient
         {
             return false;
         }
-        $meta = fread($this->socket, 4);
-        if('' === $meta || false === $meta)
+        $data = $this->socket->recv();
+        if(false === $data)
         {
             $this->close();
             return false;
         }
-        $length = unpack('N', $meta)[1];
-        $data = fread($this->socket, $length);
-        if(false === $data || !isset($data[$length - 1]))
-        {
-            $this->close();
-            return false;
-        }
-        $result = ($this->unserialize)($data);
+        $result = ($this->unserialize)(substr($data, 4));
         if($result instanceof Result)
         {
             return $result;

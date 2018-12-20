@@ -2,17 +2,18 @@
 namespace Yurun\Swoole\SharedMemory\Client\Store;
 
 use Yurun\Swoole\SharedMemory\Interfaces\IKV;
+use Yurun\Swoole\SharedMemory\Interfaces\IClient;
 
 abstract class Base
 {
     /**
      * 客户端
      *
-     * @var \Yurun\Swoole\SharedMemory\Client\Client
+     * @var \Yurun\Swoole\SharedMemory\Interfaces\IClient
      */
     private $client;
 
-    public function __construct(\Yurun\Swoole\SharedMemory\Client\Client $client)
+    public function __construct(IClient $client)
     {
         $this->client = $client;
     }
@@ -54,11 +55,11 @@ abstract class Base
     /**
      * Set 客户端
      *
-     * @param \Yurun\Swoole\SharedMemory\Client\Client $client 客户端
+     * @param \Yurun\Swoole\SharedMemory\Interfaces\IClient $client 客户端
      *
      * @return self
      */ 
-    public function setClient(\Yurun\Swoole\SharedMemory\Client\Client $client)
+    public function setClient(IClient $client)
     {
         $this->client = $client;
 
