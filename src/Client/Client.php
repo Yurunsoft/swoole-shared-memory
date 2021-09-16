@@ -1,14 +1,17 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory\Client;
 
-use Yurun\Swoole\SharedMemory\Message\Result;
 use Yurun\Swoole\SharedMemory\Message\Operation;
+use Yurun\Swoole\SharedMemory\Message\Result;
 
 class Client
 {
     /**
-     * socket 文件路径
-     * 
+     * socket 文件路径.
+     *
      * 不支持 samba 文件共享
      *
      * @var string
@@ -16,42 +19,42 @@ class Client
     private $socketFile;
 
     /**
-     * 序列化方法
+     * 序列化方法.
      *
      * @var callable
      */
     private $serialize;
 
     /**
-     * 反序列化方法
+     * 反序列化方法.
      *
      * @var callable
      */
     private $unserialize;
 
     /**
-     * socket 资源
+     * socket 资源.
      *
      * @var resource
      */
     private $socket;
 
     /**
-     * 是否已连接
+     * 是否已连接.
      *
-     * @var boolean
+     * @var bool
      */
     private $connected;
 
     /**
-     * 构造方法
+     * 构造方法.
      *
      * @param array $options
      */
     public function __construct($options = [])
     {
         $this->options = $options;
-        if(!isset($this->options['socketFile']))
+        if (!isset($this->options['socketFile']))
         {
             throw new \InvalidArgumentException('If you want to use Swoole Shared Memory, you must set the "socketFile" option');
         }
@@ -61,29 +64,29 @@ class Client
     }
 
     /**
-     * 连接
-     *
-     * @return boolean
+     * 连接.
      */
     public function connect(): bool
     {
-        if($this->connected)
+        if ($this->connected)
         {
             return true;
         }
         $this->socket = stream_socket_client('unix://' . $this->socketFile, $errno, $errstr);
-        if(false === $this->socket)
+        if (false === $this->socket)
         {
             $this->connected = false;
+
             return false;
         }
         $this->connected = true;
+
         return true;
     }
 
     public function close()
     {
-        if($this->connected)
+        if ($this->connected)
         {
             fclose($this->socket);
             $this->socket = null;
@@ -91,9 +94,7 @@ class Client
     }
 
     /**
-     * 是否已连接
-     *
-     * @return boolean
+     * 是否已连接.
      */
     public function isConnected(): bool
     {
@@ -101,55 +102,55 @@ class Client
     }
 
     /**
-     * 发送操作
-     *
-     * @param \Yurun\Swoole\SharedMemory\Message\Operation $operation
-     * @return boolean
+     * 发送操作.
      */
     public function send(Operation $operation): bool
     {
-        if(!$this->connected || !$this->connect())
+        if (!$this->connected || !$this->connect())
         {
             return false;
         }
         $data = ($this->serialize)($operation);
-        $length = strlen($data);
+        $length = \strlen($data);
         $data = pack('N', $length) . $data;
         $length += 4;
         $result = fwrite($this->socket, $data, $length);
-        if(false === $result)
+        if (false === $result)
         {
             $this->close();
         }
+
         return $length === $result;
     }
 
     /**
-     * 接收结果
+     * 接收结果.
      *
-     * @return \Yurun\Swoole\SharedMemory\Message\Result|boolean
+     * @return \Yurun\Swoole\SharedMemory\Message\Result|bool
      */
     public function recv()
     {
-        if(!$this->connected || !$this->connect())
+        if (!$this->connected || !$this->connect())
         {
             return false;
         }
         $meta = fread($this->socket, 4);
-        if('' === $meta || false === $meta)
+        if ('' === $meta || false === $meta)
         {
             $this->close();
+
             return false;
         }
         $length = unpack('N', $meta)[1];
         $data = fread($this->socket, $length);
-        if(false === $data || !isset($data[$length - 1]))
+        if (false === $data || !isset($data[$length - 1]))
         {
             $this->close();
+
             return false;
         }
         $result = ($this->unserialize)($data);
-        if($result instanceof Result)
+        if ($result instanceof Result)
         {
             return $result;
         }

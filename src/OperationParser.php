@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory;
 
 use Yurun\Swoole\SharedMemory\Message\Operation;
@@ -6,7 +9,7 @@ use Yurun\Swoole\SharedMemory\Message\Operation;
 class OperationParser
 {
     /**
-     * 对象集合
+     * 对象集合.
      *
      * @var array
      */
@@ -14,26 +17,27 @@ class OperationParser
 
     public function __construct($storeTypes)
     {
-        foreach($storeTypes as $k => $v)
+        foreach ($storeTypes as $k => $v)
         {
-            if(is_numeric($k))
+            if (is_numeric($k))
             {
                 $refClass = new \ReflectionClass($v);
-                $this->objects[$refClass->getShortName()] = new $v;
+                $this->objects[$refClass->getShortName()] = new $v();
             }
             else
             {
-                $this->objects[$k] = new $v;
+                $this->objects[$k] = new $v();
             }
         }
     }
 
     public function parse(Operation $body)
     {
-        if(!isset($this->objects[$body->object]))
+        if (!isset($this->objects[$body->object]))
         {
             throw new \RuntimeException(sprintf('Has no object %s', $body->object));
         }
+
         return ($this->objects[$body->object])->{$body->operation}(...$body->args);
     }
 }
