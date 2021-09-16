@@ -79,7 +79,7 @@ class KV implements IKV
     /**
      * 清除.
      *
-     * @return void
+     * @return bool
      */
     public function clear()
     {

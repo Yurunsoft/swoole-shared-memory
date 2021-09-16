@@ -75,7 +75,7 @@ class Queue extends Base implements IQueue
      *
      * @param string $name
      *
-     * @return void
+     * @return mixed
      */
     public function back($name)
     {

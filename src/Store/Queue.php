@@ -51,13 +51,12 @@ class Queue implements IQueue
      */
     public function push($name, ...$element)
     {
-        $result = true;
         foreach ($element as $e)
         {
-            $result &= $this->getInstance($name)->enqueue($e);
+            $this->getInstance($name)->enqueue($e);
         }
 
-        return $result;
+        return true;
     }
 
     /**
@@ -91,7 +90,7 @@ class Queue implements IQueue
      *
      * @param string $name
      *
-     * @return void
+     * @return mixed
      */
     public function back($name)
     {

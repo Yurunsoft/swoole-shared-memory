@@ -51,13 +51,12 @@ class Stack implements IStack
      */
     public function push($name, ...$element)
     {
-        $result = true;
         foreach ($element as $e)
         {
-            $result &= $this->getInstance($name)->push($e);
+            $this->getInstance($name)->push($e);
         }
 
-        return $result;
+        return true;
     }
 
     /**
