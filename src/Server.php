@@ -68,7 +68,7 @@ class Server implements IServer
      */
     public function __construct($options = [])
     {
-        if (!('cli' === PHP_SAPI && \extension_loaded('swoole')))
+        if (!('cli' === \PHP_SAPI && \extension_loaded('swoole')))
         {
             throw new \RuntimeException('Must run with cli and swoole');
         }

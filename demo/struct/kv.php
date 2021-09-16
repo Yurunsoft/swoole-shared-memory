@@ -1,22 +1,22 @@
 <?php
+
+declare(strict_types=1);
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
-use Yurun\Swoole\SharedMemory\Server;
 use Yurun\Swoole\SharedMemory\Client\Client;
 use Yurun\Swoole\SharedMemory\Client\Store\KV;
 
 $options = [
     // 这个文件必须，而且不能是samba共享文件
-    'socketFile'    =>  '/tmp/swoole-shared-memory.sock',
+    'socketFile'    => '/tmp/swoole-shared-memory.sock',
 ];
-
 
 $client = new Client($options);
 var_dump($client->connect());
 
 $kv = new KV($client);
 
-$obj = new stdClass;
+$obj = new stdClass();
 
 $obj->time = date('Y-m-d H:i:s');
 $kv->set('a', $obj);
