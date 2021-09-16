@@ -3,10 +3,9 @@
     "type": "library",
     "license": "MIT",
     "require": {
-
     },
     "require-dev": {
-        "eaglewu/swoole-ide-helper": "dev-master"
+        "swoole/ide-helper": "^4.4"
     },
     "autoload": {
         "psr-4" : {

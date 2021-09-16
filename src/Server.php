@@ -98,7 +98,7 @@ class Server implements IServer
         {
             unlink($this->socketFile);
         }
-        go(function(){
+        \Swoole\Coroutine::create(function(){
             $this->socket = stream_socket_server('unix://' . $this->socketFile, $errno, $errstr);
             if(false === $this->socket)
             {
@@ -111,7 +111,7 @@ class Server implements IServer
                 {
                     continue;
                 }
-                go(function() use($conn){
+                \Swoole\Coroutine::create(function() use($conn){
                     $this->parseConn($conn);
                 });
             }
@@ -121,7 +121,7 @@ class Server implements IServer
     /**
      * 获取配置
      *
-     * @return void
+     * @return array
      */
     public function getOptions()
     {
