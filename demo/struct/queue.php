@@ -7,7 +7,7 @@ use Yurun\Swoole\SharedMemory\Client\Store\Queue;
 
 $options = [
     // 这个文件必须，而且不能是samba共享文件
-    'socketFile'    =>  '/swoole-shared-memory.sock',
+    'socketFile'    =>  '/tmp/swoole-shared-memory.sock',
 ];
 
 $client = new Client($options);
