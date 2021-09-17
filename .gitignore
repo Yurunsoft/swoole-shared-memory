@@ -1,3 +1,6 @@
+.idea
 /vendor
 *.lock
 *.log
+.gitignore
+.php-cs-fixer.cache

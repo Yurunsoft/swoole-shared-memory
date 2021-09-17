@@ -1,10 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory\Message;
 
 class Result
 {
     /**
-     * 结果
+     * 结果.
      *
      * @var mixed
      */

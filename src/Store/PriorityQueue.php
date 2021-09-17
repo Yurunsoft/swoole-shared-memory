@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory\Store;
 
 use Yurun\Swoole\SharedMemory\Interfaces\IPriorityQueue;
@@ -6,17 +9,18 @@ use Yurun\Swoole\SharedMemory\Interfaces\IPriorityQueue;
 class PriorityQueue implements IPriorityQueue
 {
     /**
-     * 存储的数据
+     * 存储的数据.
      *
      * @var array
      */
     private $data = [];
 
     /**
-     * 队列是否为空
+     * 队列是否为空.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function empty($name)
     {
@@ -24,12 +28,13 @@ class PriorityQueue implements IPriorityQueue
     }
 
     /**
-     * 插入
+     * 插入.
      *
      * @param string $name
-     * @param mixed $name
-     * @param mixed $priority
-     * @return int
+     * @param mixed  $name
+     * @param mixed  $priority
+     *
+     * @return bool
      */
     public function insert($name, $element, $priority)
     {
@@ -37,21 +42,24 @@ class PriorityQueue implements IPriorityQueue
     }
 
     /**
-     * 弹出一个元素
+     * 弹出一个元素.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function extract($name)
     {
         $queue = $this->getInstance($name);
+
         return $queue->isEmpty() ? false : $queue->extract();
     }
 
     /**
-     * 返回队列长度
+     * 返回队列长度.
      *
      * @param string $name
+     *
      * @return int
      */
     public function size($name)
@@ -60,25 +68,28 @@ class PriorityQueue implements IPriorityQueue
     }
 
     /**
-     * 清空队列
+     * 清空队列.
      *
      * @param string $name
+     *
      * @return void
      */
     public function clear($name)
     {
-        $this->data[$name] = new \Yurun\Swoole\SharedMemory\Struct\PriorityQueue;
+        $this->data[$name] = new \Yurun\Swoole\SharedMemory\Struct\PriorityQueue();
     }
 
     /**
-     * 获取数组
+     * 获取数组.
      *
      * @param string $name
+     *
      * @return array
      */
     public function getArray($name)
     {
         $queue = clone $this->getInstance($name);
+
         return iterator_to_array($queue);
     }
 
@@ -86,15 +97,16 @@ class PriorityQueue implements IPriorityQueue
      * 获取实例对象
      *
      * @param string $name
+     *
      * @return \Yurun\Swoole\SharedMemory\Struct\PriorityQueue
      */
     public function getInstance($name)
     {
-        if(!isset($this->data[$name]))
+        if (!isset($this->data[$name]))
         {
-            $this->data[$name] = new \Yurun\Swoole\SharedMemory\Struct\PriorityQueue;
+            $this->data[$name] = new \Yurun\Swoole\SharedMemory\Struct\PriorityQueue();
         }
+
         return $this->data[$name];
     }
-
 }

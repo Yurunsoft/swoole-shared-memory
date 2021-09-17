@@ -1,16 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory\Client\Store;
 
-use Yurun\Swoole\SharedMemory\Message\Operation;
 use Yurun\Swoole\SharedMemory\Interfaces\IStack;
+use Yurun\Swoole\SharedMemory\Message\Operation;
 
 class Stack extends Base implements IStack
 {
     /**
-     * 栈是否为空
+     * 栈是否为空.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function empty($name)
     {
@@ -18,9 +22,10 @@ class Stack extends Base implements IStack
     }
 
     /**
-     * 弹出栈顶元素
+     * 弹出栈顶元素.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function pop($name)
@@ -29,11 +34,12 @@ class Stack extends Base implements IStack
     }
 
     /**
-     * 在栈底增加元素
+     * 在栈底增加元素.
      *
      * @param string $name
-     * @param mixed $element
-     * @return boolean
+     * @param mixed  $element
+     *
+     * @return bool
      */
     public function push($name, ...$element)
     {
@@ -41,9 +47,10 @@ class Stack extends Base implements IStack
     }
 
     /**
-     * 返回栈中元素数目
+     * 返回栈中元素数目.
      *
      * @param string $name
+     *
      * @return int
      */
     public function size($name)
@@ -52,9 +59,10 @@ class Stack extends Base implements IStack
     }
 
     /**
-     * 返回栈顶元素
+     * 返回栈顶元素.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function top($name)
@@ -63,9 +71,10 @@ class Stack extends Base implements IStack
     }
 
     /**
-     * 清空栈
+     * 清空栈.
      *
      * @param string $name
+     *
      * @return void
      */
     public function clear($name)
@@ -74,9 +83,10 @@ class Stack extends Base implements IStack
     }
 
     /**
-     * 获取数组
+     * 获取数组.
      *
      * @param string $name
+     *
      * @return array
      */
     public function getArray($name)
@@ -88,11 +98,11 @@ class Stack extends Base implements IStack
      * 获取实例对象
      *
      * @param string $name
+     *
      * @return \Yurun\Swoole\SharedMemory\Struct\PriorityQueue
      */
     public function getInstance($name)
     {
         return $this->doCall(new Operation('Stack', 'getInstance', [$name]));
     }
-
 }

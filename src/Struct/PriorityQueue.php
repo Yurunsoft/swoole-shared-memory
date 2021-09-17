@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory\Struct;
 
 class PriorityQueue extends \SplPriorityQueue implements \Serializable
@@ -11,7 +14,7 @@ class PriorityQueue extends \SplPriorityQueue implements \Serializable
     public function unserialize($serialized)
     {
         $array = unserialize($serialized);
-        foreach($array as $p => $v)
+        foreach ($array as $p => $v)
         {
             $this->insert($v, $p);
         }

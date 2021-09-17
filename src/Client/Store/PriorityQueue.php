@@ -1,16 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory\Client\Store;
 
-use Yurun\Swoole\SharedMemory\Message\Operation;
 use Yurun\Swoole\SharedMemory\Interfaces\IPriorityQueue;
+use Yurun\Swoole\SharedMemory\Message\Operation;
 
 class PriorityQueue extends Base implements IPriorityQueue
 {
     /**
-     * 队列是否为空
+     * 队列是否为空.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function empty($name)
     {
@@ -18,11 +22,12 @@ class PriorityQueue extends Base implements IPriorityQueue
     }
 
     /**
-     * 插入
+     * 插入.
      *
      * @param string $name
-     * @param mixed $name
-     * @param mixed $priority
+     * @param mixed  $name
+     * @param mixed  $priority
+     *
      * @return int
      */
     public function insert($name, $element, $priority)
@@ -31,9 +36,10 @@ class PriorityQueue extends Base implements IPriorityQueue
     }
 
     /**
-     * 弹出一个元素
+     * 弹出一个元素.
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function extract($name)
@@ -42,9 +48,10 @@ class PriorityQueue extends Base implements IPriorityQueue
     }
 
     /**
-     * 返回队列长度
+     * 返回队列长度.
      *
      * @param string $name
+     *
      * @return int
      */
     public function size($name)
@@ -53,9 +60,10 @@ class PriorityQueue extends Base implements IPriorityQueue
     }
 
     /**
-     * 清空队列
+     * 清空队列.
      *
      * @param string $name
+     *
      * @return void
      */
     public function clear($name)
@@ -64,9 +72,10 @@ class PriorityQueue extends Base implements IPriorityQueue
     }
 
     /**
-     * 获取数组
+     * 获取数组.
      *
      * @param string $name
+     *
      * @return array
      */
     public function getArray($name)
@@ -78,11 +87,11 @@ class PriorityQueue extends Base implements IPriorityQueue
      * 获取实例对象
      *
      * @param string $name
+     *
      * @return \Yurun\Swoole\SharedMemory\Struct\PriorityQueue
      */
     public function getInstance($name)
     {
         return $this->doCall(new Operation('PriorityQueue', 'getInstance', [$name]));
     }
-
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory\Client\Store;
 
 use Yurun\Swoole\SharedMemory\Interfaces\IKV;
@@ -10,8 +13,9 @@ class KV extends Base implements IKV
      * 写入值
      *
      * @param string $name
-     * @param mixed $value
-     * @return boolean
+     * @param mixed  $value
+     *
+     * @return bool
      */
     public function set($name, $value)
     {
@@ -22,7 +26,8 @@ class KV extends Base implements IKV
      * 获取值
      *
      * @param string $name
-     * @param mixed $default
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public function get($name, $default = null)
@@ -34,7 +39,8 @@ class KV extends Base implements IKV
      * 移除值
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function remove($name)
     {
@@ -42,10 +48,11 @@ class KV extends Base implements IKV
     }
 
     /**
-     * 是否存在
+     * 是否存在.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function exists($name)
     {
@@ -53,9 +60,9 @@ class KV extends Base implements IKV
     }
 
     /**
-     * 清除
+     * 清除.
      *
-     * @return void
+     * @return bool
      */
     public function clear()
     {
@@ -63,13 +70,12 @@ class KV extends Base implements IKV
     }
 
     /**
-     * 获取总的存储数据条数
+     * 获取总的存储数据条数.
      *
-     * @return iont
+     * @return int
      */
     public function count()
     {
         return $this->doCall(new Operation('KV', 'count'));
     }
-
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory\Interfaces;
 
 interface IKV
@@ -7,8 +10,9 @@ interface IKV
      * 写入值
      *
      * @param string $name
-     * @param mixed $value
-     * @return boolean
+     * @param mixed  $value
+     *
+     * @return bool
      */
     public function set($name, $value);
 
@@ -16,7 +20,8 @@ interface IKV
      * 获取值
      *
      * @param string $name
-     * @param mixed $default
+     * @param mixed  $default
+     *
      * @return mixed
      */
     public function get($name, $default = null);
@@ -25,31 +30,31 @@ interface IKV
      * 移除值
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function remove($name);
 
     /**
-     * 是否存在
+     * 是否存在.
      *
      * @param string $name
-     * @return boolean
+     *
+     * @return bool
      */
     public function exists($name);
 
     /**
-     * 清除
+     * 清除.
      *
-     * @return void
+     * @return bool
      */
     public function clear();
 
     /**
-     * 获取总的存储数据条数
+     * 获取总的存储数据条数.
      *
-     * @return iont
+     * @return int
      */
     public function count();
-
-    
 }

@@ -1,24 +1,27 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yurun\Swoole\SharedMemory\Message;
 
 class Operation
 {
     /**
-     * 操作的对象名
+     * 操作的对象名.
      *
      * @var string
      */
     public $object;
 
     /**
-     * 操作名
+     * 操作名.
      *
      * @var string
      */
     public $operation;
 
     /**
-     * 参数
+     * 参数.
      *
      * @var array
      */

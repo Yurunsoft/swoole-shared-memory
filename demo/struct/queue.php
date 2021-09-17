@@ -1,13 +1,14 @@
 <?php
+
+declare(strict_types=1);
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
-use Yurun\Swoole\SharedMemory\Server;
 use Yurun\Swoole\SharedMemory\Client\Client;
 use Yurun\Swoole\SharedMemory\Client\Store\Queue;
 
 $options = [
     // 这个文件必须，而且不能是samba共享文件
-    'socketFile'    =>  '/swoole-shared-memory.sock',
+    'socketFile'    => '/tmp/swoole-shared-memory.sock',
 ];
 
 $client = new Client($options);
@@ -18,7 +19,7 @@ $queue = new Queue($client);
 $queue->push('a', microtime(true));
 $queue->push('a', microtime(true));
 $queue->push('a', microtime(true));
-$queue->push('a', 1,2,3);
+$queue->push('a', 1, 2, 3);
 
 var_dump($queue->size('a'));
 
@@ -31,9 +32,9 @@ $instance = $queue->getInstance('a');
 
 var_dump($instance->count());
 
-echo 'pop:', PHP_EOL;
+echo 'pop:', \PHP_EOL;
 
-while($element = $queue->pop('a'))
+while ($element = $queue->pop('a'))
 {
     var_dump($element);
 }
